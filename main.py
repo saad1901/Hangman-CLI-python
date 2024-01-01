@@ -1,6 +1,7 @@
 import random
 
-def get_random_word(file_path, min_length, max_length):
+def get_random_word(min_length, max_length):
+    file_path = r'E:\projects\hangman-python\words.txt'
     try:
         with open(file_path, 'r') as file:
             words = [line.strip() for line in file if min_length <= len(line.strip()) <= max_length]
@@ -15,14 +16,33 @@ def get_random_word(file_path, min_length, max_length):
         print(f"File not found: {file_path}")
         return None
 
-file_path = r'hangman-python\words.txt'
-min_length = 5
-max_length = 8
-word = get_random_word(file_path, min_length, max_length)
-
+# # min_length = 5
+# # max_length = 8
+# word = get_random_word(min_length, max_length)
+word = ''
+null = ''
 # print(word)
-print('\n')
+print('---------------------------------')
 print('#### Welcome To Hangman Game ####')
-print('\n')
-level = input('choose level 1:Easy 2:Medium')
+print('---------------------------------')
 
+def choose_level():
+    global word
+    level = input('choose level 1:Easy 2:Medium : ' )
+    if level == "1":
+        word = get_random_word(4,4)
+        # print('word is ',word)
+    elif level == '2':
+        word = get_random_word(5,8)
+        # print(word)
+    else:
+        print('!choose correct option')
+        choose_level()
+
+choose_level()
+# print(word)
+
+def game(words):
+    for i in words:
+        null.append('_')
+    print(null)
