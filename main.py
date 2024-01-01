@@ -11,38 +11,53 @@ def get_random_word(min_length, max_length):
             return None
 
         random_word = random.choice(words)
+        print(random_word)
         return random_word
     except FileNotFoundError:
         print(f"File not found: {file_path}")
         return None
 
-# # min_length = 5
-# # max_length = 8
-# word = get_random_word(min_length, max_length)
-word = ''
-null = ''
-# print(word)
-print('---------------------------------')
-print('#### Welcome To Hangman Game ####')
-print('---------------------------------')
+def game(word):
+    word_length = len(word)
+    dash = ['_'] * word_length
+    timer = 6
+
+    while True:
+        print('__________________________')
+        print(" ".join(dash))
+        print('__________________________')
+        
+        guess = input('Guess: ')
+        if guess in word:
+            for i in range(word_length):
+                if guess == word[i]:
+                    dash[i] = guess
+        else:
+            timer -= 1
+            print(f'Incorrect chances remaining: {timer}')
+        
+        if timer == 0 or '_' not in dash:
+            return timer
 
 def choose_level():
-    global word
-    level = input('choose level 1:Easy 2:Medium : ' )
-    if level == "1":
-        word = get_random_word(4,4)
-        # print('word is ',word)
-    elif level == '2':
-        word = get_random_word(5,8)
-        # print(word)
+    while True:
+        level = input('Choose level: 1 - Easy, 2 - Medium: ')
+        if level == '1':
+            return get_random_word(4, 4), level
+        elif level == '2':
+            return get_random_word(5, 8), level
+        else:
+            print('Choose a correct option.')
+
+if __name__ == "__main__":
+    print('---------------------------------')
+    print('#### Welcome To Hangman Game ####')
+    print('---------------------------------')
+
+    selected_word, selected_level = choose_level()
+    result = game(selected_word)
+
+    if result == 0:
+        print(f"Sorry, you lost. The word was: {selected_word}")
     else:
-        print('!choose correct option')
-        choose_level()
-
-choose_level()
-# print(word)
-
-def game(words):
-    for i in words:
-        null.append('_')
-    print(null)
+        print(f"Congratulations! You guessed the word: {selected_word}")
