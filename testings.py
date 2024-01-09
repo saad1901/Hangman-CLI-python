@@ -1,5 +1,5 @@
 import random
-
+#imported random 
 def get_random_word(min_length, max_length):
     file_path = r'E:\projects\hangman-python\words.txt'
     try:
